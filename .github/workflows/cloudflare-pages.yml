@@ -22,5 +22,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name $CLOUDFLARE_PAGES_NAME
- 
+          command: pages deploy dist --project-name=kigou-me
