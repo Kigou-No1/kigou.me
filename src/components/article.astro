@@ -18,16 +18,16 @@ const {emoji, title, description, tags, uploadAt, readTime, wordCount, slug} = A
         <div class="flex flex-col pl-3">
             <a class="font-bold text-2xl pt-3" href={`${slug}`}>{title}</a>
             <h1 class="text-lg">{description}</h1>
-            <div class="flex mt-0.5">
-                <ul class="flex">
+            <div class="flex mt-0.5 w-full max-w-1/2">
+                <ul class="flex flex-wrap gap-2">
                     {   
                         tags ? tags.map((tag) => (
-                            <li class="badge mx-0.5">{tag}</li>
+                            <li class="badge">{tag}</li>
                         )) : undefined
                     }
-                    <li class="badge badge-success mx-0.5">{uploadAt}</li>
-                    <li class="badge badge-accent mx-0.5">{wordCount} words</li>
-                    <li class="badge badge-info mx-0.5">{readTime}min to read</li>
+                    <li class="badge badge-success">{uploadAt}</li>
+                    <li class="badge badge-accent">{wordCount} words</li>
+                    <li class="badge badge-info">{readTime}min to read</li>
                 </ul>
             </div>
         </div>
