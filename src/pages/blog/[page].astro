@@ -1,10 +1,8 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
-import Layout from "../../components/_layout.astro";
+import { getCollection} from "astro:content";
 import Article from "../../components/article.astro";
 import PageLayout from "../../components/_page_layout.astro";
-import type { GetStaticPaths, GetStaticPathsOptions } from "astro";
-import { parseArgsAsCheckConfig } from "@astrojs/check";
+import type {GetStaticPathsOptions} from "astro";
 
 export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
   const entries = (await getCollection("blog")).filter(
