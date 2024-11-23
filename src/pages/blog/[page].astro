@@ -63,7 +63,7 @@ const { page } = Astro.props;
                 description={blog.body.slice(0, 20)}
                 tags={blog.data.tags}
                 uploadAt={blog.data.uploadAt.toDateString()}
-                wordCount={blog.body.split(" ").length}
+                wordCount={blog.body.split(/\s+/).length}
                 readTime={`${Math.round(blog.body.length / 400)}`}
                 slug={blog.slug}
               />
