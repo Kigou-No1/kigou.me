@@ -1,7 +1,7 @@
 ---
 emoji: "👍"
 title: Astro.js + Github Actions + Cloudflare Pagesでサイトを作った
-draft: true
+draft: false
 tags: ["astro", "github", "cloudflare"]
 uploadAt: 2024-10-23
 ---
@@ -41,7 +41,7 @@ Astro.jsさんめちゃめちゃ書きやすかったです。
 
 ## ソースコード
 
-https://github.com/Kigou-No1/kigou.meにあるので煮るなり焼くなりしてください。
+https://github.com/Kigou-No1/kigou.me にあるので煮るなり焼くなりしてください。
 
 文字通り初めてHTMLやらCSSに触ったのでプロパティの使い方がかなり変だと思いますがゆるしてください
 
