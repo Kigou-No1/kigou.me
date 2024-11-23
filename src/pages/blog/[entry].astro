@@ -1,0 +1,68 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import Layout from "../../components/_layout.astro";
+import { getEntry } from "astro:content";
+import { getEntryBySlug } from "astro:content";
+import PageLayout from "../../components/_page_layout.astro";
+import { undefined } from "astro:schema";
+export const getStaticPaths = (async () => {
+  const entries = await getCollection("blog");
+  return entries.map((entry) => ({
+    params: { entry: entry.slug },
+    props: { entry },
+  }));
+}) satisfies GetStaticPaths;
+
+const props = Astro.props;
+const { Content, headings } = await props.entry.render();
+---
+
+<PageLayout title={props.entry.data.title}>
+  <div class="mt-3 mb-4">
+    <ul class="flex items-center">
+      {
+        props.entry.data.tags
+          ? props.entry.data.tags.map((tag) => (
+              <li>
+                <a class="badge ml-1">{tag}</a>
+              </li>
+            ))
+          : undefined
+      }
+      <li>
+        <a class="badge badge-success ml-1">
+          {props.entry.data.uploadAt.toDateString()}
+        </a>
+      </li>
+      <li>
+        <a class="badge badge-accent ml-1">
+          {props.entry.body.split(" ").length} words
+        </a>
+      </li>
+      <li>
+        <a class="badge badge-info ml-1">
+          {Math.round(props.entry.body.split(" ").length / 400)} min read
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="flex max-w-screen">
+    <div class="text-center w-full max-w-4xl mt-4">
+      <div class="text-left prose prose-h1:text-3xl">
+        <Content />
+      </div>
+    </div>
+    <div>
+      <aside class="toc">
+        <ol class="toc-level-0">
+        {headings.filter(h => h.depth < 3).map((h,i) => {
+        return (
+            <li class={`toc-level-${h.depth} toc-item`}><a href={`#${h.slug}`}>{h.text}</a></li>
+            )})}
+        </ol>
+    
+      </aside>
+    </div>
+  </div>
+</PageLayout>

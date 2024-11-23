@@ -1,0 +1,35 @@
+---
+export type Props = {
+    emoji: string;
+    title: string;
+    description: string;
+    tags: string[] | undefined;
+    uploadAt: string;
+    readTime: string;
+    wordCount: number;
+    slug: string;
+}
+
+const {emoji, title, description, tags, uploadAt, readTime, wordCount, slug} = Astro.props;
+---
+<div class="rounded-lg bg-white pb-2">
+    <div class="flex items-center">
+        <h1 class="place-items-center text-5xl pb-2">{emoji}</h1>
+        <div class="flex flex-col pl-3">
+            <a class="font-bold text-2xl pt-3" href={`blog/${slug}`}>{title}</a>
+            <h1 class="text-lg">{description}</h1>
+            <div class="flex mt-0.5">
+                <ul class="flex">
+                    {   
+                        tags ? tags.map((tag) => (
+                            <li class="badge mx-0.5">{tag}</li>
+                        )) : undefined
+                    }
+                    <li class="badge badge-success mx-0.5">{uploadAt}</li>
+                    <li class="badge badge-accent mx-0.5">{wordCount} words</li>
+                    <li class="badge badge-info mx-0.5">{readTime} to read</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "../components/_layout.astro";
+import Article from "../components/article.astro";
+import PageLayout from "../components/_page_layout.astro";
+
+// カレンダー実装用
+// const date = new Date();
+// const getDaysInMonth = (year: number, month: number) => new Date(year, month, 0).getDate();
+// const generateDaysArray = (year: number, month: number) => {
+//   const days = getDaysInMonth(year, month);
+//   const daysArray = [];
+//   for (let i = 1; i <= days; i++) {
+//     daysArray.push(i);
+//   }
+//   return daysArray;
+// };
+
+// const days = generateDaysArray(date.getFullYear(), date.getMonth() + 1);
+
+const allBlog: CollectionEntry<"blog">[] = (await getCollection("blog")).filter(
+  (blog) => blog.data.draft != true,
+);
+---
+
+<PageLayout title="Blog">
+  <div>
+    <ul class="mt-10 w-5/6 max-w-4xl space-y-4">
+      <li class="pb-4">
+        <label class="input input-bordered flex items-center gap-2 mb-5">
+          <input type="text" class="grow" placeholder="Search" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            class="h-4 w-4 opacity-70"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </label>
+      </li>
+      {
+        allBlog.map((blog) => (
+          <li>
+            <Article
+              title={blog.data.title}
+              emoji={blog.data.emoji}
+              description={blog.body.slice(0, 20)}
+              tags={blog.data.tags}
+              uploadAt={blog.data.uploadAt.toDateString()}
+              wordCount={blog.body.split(" ").length}
+              readTime={`${Math.round(blog.body.length / 400)}`}
+              slug={blog.slug}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <!-- カレンダー実装用 
+      <div class="bg-white rounded-xl ml-56 mt-28">
+      <div class="flex items-center justify-between">
+        <h1>Nov 2024</h1>
+        <button>←</button>
+        <button>→</button>
+      </div>
+      <table>
+        <tr>
+          <th>Mo</th>
+          <th>Tu</th>
+          <th>We</th>
+          <th>Th</th>
+          <th>Fr</th>
+          <th>Sa</th>
+          <th>Su</th>
+        </tr>
+        {
+          date = new Date()
+        }
+      </table>
+    </div> -->
+</PageLayout>
