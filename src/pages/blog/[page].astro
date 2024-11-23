@@ -1,8 +1,8 @@
 ---
-import { getCollection} from "astro:content";
+import { getCollection } from "astro:content";
 import Article from "../../components/article.astro";
 import PageLayout from "../../components/_page_layout.astro";
-import type {GetStaticPathsOptions} from "astro";
+import type { GetStaticPathsOptions } from "astro";
 
 export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
   const entries = (await getCollection("blog")).filter(
@@ -72,9 +72,11 @@ const { page } = Astro.props;
         )
       }
       {
-        page.data.length > 0 && (
-          <div class="flex justify-center mt-10">
-            <button class="btn btn-primary">Load More</button>
+        page.total != 1 && (
+          <div class="join flex justify-center pt-10">
+            { page.url.prev && <a class="join-item btn" href={page.url.prev}>«</a>}
+            { (page.url.prev || page.url.next) && <a class="join-item btn">Page {page.currentPage}</a>}
+            { page.url.next && <a class="join-item btn" href={page.url.next}>»</a>}
           </div>
         )
       }
