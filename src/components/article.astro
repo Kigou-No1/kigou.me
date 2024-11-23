@@ -6,11 +6,11 @@ export type Props = {
     tags: string[] | undefined;
     uploadAt: string;
     readTime: string;
-    wordCount: number;
+    charCount: number;
     slug: string;
 }
 
-const {emoji, title, description, tags, uploadAt, readTime, wordCount, slug} = Astro.props;
+const {emoji, title, description, tags, uploadAt, readTime, charCount: wordCount, slug} = Astro.props;
 ---
 <div class="rounded-lg bg-white pb-2 shadow-xl">
     <div class="flex items-center">
@@ -26,7 +26,7 @@ const {emoji, title, description, tags, uploadAt, readTime, wordCount, slug} = A
                         )) : undefined
                     }
                     <li class="badge badge-success">{uploadAt}</li>
-                    <li class="badge badge-accent">{wordCount} words</li>
+                    <li class="badge badge-accent">{wordCount} chars</li>
                     <li class="badge badge-info">{readTime}min to read</li>
                 </ul>
             </div>
