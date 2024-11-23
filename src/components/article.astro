@@ -1,35 +1,67 @@
 ---
-export type Props = {
-    emoji: string;
-    title: string;
-    description: string;
-    tags: string[] | undefined;
-    uploadAt: string;
-    readTime: string;
-    charCount: number;
-    slug: string;
-}
+import { undefined } from "astro:schema";
 
-const {emoji, title, description, tags, uploadAt, readTime, charCount: wordCount, slug} = Astro.props;
+export type Tag = {
+  id: string;
+  collections: string;
+  data: {
+    name: string;
+  };
+};
+
+export type Props = {
+  emoji: string;
+  title: string;
+  description: string;
+  tags: Tag[] | undefined;
+  uploadAt: string;
+  readTime: string;
+  charCount: number;
+  slug: string;
+};
+
+const {
+  emoji,
+  title,
+  description,
+  tags,
+  uploadAt,
+  readTime,
+  charCount: wordCount,
+  slug,
+} = Astro.props;
 ---
+
 <div class="rounded-lg bg-white pb-2 shadow-xl">
-    <div class="flex items-center">
-        <h1 class="place-items-center text-5xl pb-2">{emoji}</h1>
-        <div class="flex flex-col pl-3">
-            <a class="font-bold text-2xl pt-3" href={slug}>{title}</a>
-            <h1 class="text-lg">{description}</h1>
-            <div class="flex mt-0.5 w-full max-w-1/2">
-                <ul class="flex flex-wrap gap-2">
-                    {   
-                        tags ? tags.map((tag) => (
-                            <li class="badge">{tag}</li>
-                        )) : undefined
-                    }
-                    <li class="badge badge-success">{uploadAt}</li>
-                    <li class="badge badge-accent">{wordCount} chars</li>
-                    <li class="badge badge-info">{readTime}min to read</li>
-                </ul>
-            </div>
-        </div>
+  <div class="flex items-center">
+    <h1 class="place-items-center text-5xl pb-2">{emoji}</h1>
+    <div class="flex flex-col pl-3">
+      <a class="font-bold text-2xl pt-3" href={slug}>{title}</a>
+      <h1 class="text-lg">{description}</h1>
+      <div class="flex mt-0.5 w-full max-w-1/2">
+        <ul class="flex flex-wrap gap-2">
+          {
+            tags
+              ? tags.map((tag) => (
+                  <li class="badge">
+                    <a
+                      href={
+                        Astro.url.pathname.startsWith("/blog/tags")
+                          ? tag.id
+                          : `tags/${tag.id}`
+                      }
+                    >
+                      {tag.id}
+                    </a>
+                  </li>
+                ))
+              : undefined
+          }
+          <li class="badge badge-success">{uploadAt}</li>
+          <li class="badge badge-accent">{wordCount} chars</li>
+          <li class="badge badge-info">{readTime}min to read</li>
+        </ul>
+      </div>
     </div>
+  </div>
 </div>

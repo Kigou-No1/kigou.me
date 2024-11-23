@@ -1,0 +1,44 @@
+---
+import { getCollection } from "astro:content";
+import Article, { type Tag } from "../../../components/article.astro";
+import PageLayout from "../../../components/_page_layout.astro";
+
+export const getStaticPaths = async () => {
+  return (await getCollection("tags")).map(tag => ({
+    params: {tag: tag.id}, props: { tag }
+  }))
+};
+
+const prop = Astro.props;
+
+const postCollection = await getCollection("blog")
+const pages = postCollection.filter(post => (post.data.tags?.some((tag) => tag.id === prop.tag.id)))
+console.log(pages)
+---
+
+<PageLayout title=`Blog - #${prop.tag.id}`>
+  <div>
+    <ul class="mt-10 w-5/6 max-w-4xl space-y-4">
+      {
+        pages.length === 0 ? (
+          <p>まだ記事が投稿されていません！</p>
+        ) : (
+          pages.map((blog: { data: { title: string; emoji: string; tags: Tag[] | undefined; uploadAt: { toDateString: () => string; }; }; body: string; slug: string; }) => (
+            <li>
+              <Article
+                title={blog.data.title}
+                emoji={blog.data.emoji}
+                description={blog.body.slice(0, 20)}
+                tags={blog.data.tags}
+                uploadAt={blog.data.uploadAt.toDateString()}
+                charCount={blog.body.length}
+                readTime={`${Math.round(blog.body.length / 400)}`}
+                slug={blog.slug}
+              />
+            </li>
+          ))
+        )
+      }
+    </ul>
+  </div>
+</PageLayout>
