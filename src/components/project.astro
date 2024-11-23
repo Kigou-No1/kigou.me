@@ -9,14 +9,14 @@ export type Props = {
 const { title, description, img, url } = Astro.props;
 ---
 
-<div class="card lg:card-side bg-base-100 shadow-xl">
+<div class="card lg:card-side bg-base-100 shadow-xl mt-10">
   <div class="card-body">
     <h1 class="card-title">{title}</h1>
     <p>{description}</p>
   </div>
   <figure>
     <a href={url}>
-      <img src={img}/ decoding="async" loading="lazy" alt="Discord Message Expander">
+      <img src={img} decoding="async" loading="lazy" alt={title}>
     </a>
   </figure>
 </div>
