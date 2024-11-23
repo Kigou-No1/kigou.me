@@ -1,7 +1,7 @@
 ---
 emoji: "👍"
 title: Test my articleas
-draft: false
+draft: true
 tags: ["aa", "bsfd"]
 uploadAt: 2024-10-23
 ---
@@ -78,7 +78,7 @@ I'm so tired that I keep writing this code for 2 hours
 
 ## Test section 4
 ```py
-for i in range(10)
+for i in range(10):
     print("あいさつしすぎだろ！")
 ```
 
