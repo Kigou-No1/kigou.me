@@ -2,7 +2,18 @@
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import PageLayout from "../../components/_page_layout.astro";
-import { undefined } from "astro:schema";
+
+export type Props = {
+    entry: {
+        data: {
+            title: string;
+            tags: string[];
+            uploadAt: Date;
+        };
+        body: string;
+        render: () => Promise<{ Content: any; headings: any[] }>;
+    }
+}
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const entries = await getCollection("blog");
@@ -20,7 +31,7 @@ const { Content, headings } = await props.entry.render();
   <div class="mt-3 mb-4">
     <ul class="flex items-center flex-wrap">
       {
-        props.entry.data.tags?.map((tag) => (
+        props.entry.data.tags?.map((tag: unknown) => (
           <li>
             <a class="badge ml-1">{tag}</a>
           </li>
@@ -57,8 +68,8 @@ const { Content, headings } = await props.entry.render();
       <ol class="space-y-2">
         {
           headings
-            .filter((h) => h.depth < 3)
-            .map((h) => (
+            .filter((h: { depth: number; }) => h.depth < 3)
+            .map((h: { depth: number; slug: any; text: unknown; }) => (
               <li
                 class={`pl-${(h.depth - 1) * 4} hover:text-blue-600 transition-colors`}
               >
