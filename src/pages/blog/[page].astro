@@ -7,7 +7,9 @@ import type { GetStaticPaths, GetStaticPathsOptions } from "astro";
 import { parseArgsAsCheckConfig } from "@astrojs/check";
 
 export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
-  const entries = await getCollection("blog");
+  const entries = (await getCollection("blog")).filter(
+    (entry) => !entry.data.draft,
+  );
   return paginate(entries, { pageSize: 3 });
 };
 
@@ -25,52 +27,59 @@ export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
 
 // const days = generateDaysArray(date.getFullYear(), date.getMonth() + 1);
 const { page } = Astro.props;
-
-
 ---
 
 <PageLayout title="Blog">
   <div>
     <ul class="mt-10 w-5/6 max-w-4xl space-y-4">
-      <li class="pb-4">
-        <label class="input input-bordered flex items-center gap-2 mb-5">
-          <input type="text" class="grow" placeholder="Search" />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            class="h-4 w-4 opacity-70"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-              clip-rule="evenodd"></path>
-          </svg>
-        </label>
-      </li>
       {
-        page.data.map((blog) => (
-          <li>
-            <Article
-              title={blog.data.title}
-              emoji={blog.data.emoji}
-              description={blog.body.slice(0, 20)}
-              tags={blog.data.tags}
-              uploadAt={blog.data.uploadAt.toDateString()}
-              wordCount={blog.body.split(" ").length}
-              readTime={`${Math.round(blog.body.length / 400)}`}
-              slug={blog.slug}
-            />
+        page.data.length > 0 && (
+          <li class="pb-4">
+            <label class="input input-bordered flex items-center gap-2 mb-5">
+              <input type="text" class="grow" placeholder="Search" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </label>
           </li>
-        ))
+        )
       }
-      <li>
-        <div class="flex justify-center join">
-            { page.url.prev ? <a class="join-item btn" href={`${page.currentPage - 1}`}>«</a> : undefined}
-            <p class="join-item btn">{`Page ${page.currentPage}`}</p>
-            { page.url.next ? <a class="join-item btn" href={`${page.currentPage + 1}`}>»</a> : undefined}
+      {
+        page.data.length === 0 ? (
+          <p>まだ記事が投稿されていません！</p>
+        ) : (
+          page.data.map((blog) => (
+            <li>
+              <Article
+                title={blog.data.title}
+                emoji={blog.data.emoji}
+                description={blog.body.slice(0, 20)}
+                tags={blog.data.tags}
+                uploadAt={blog.data.uploadAt.toDateString()}
+                wordCount={blog.body.split(" ").length}
+                readTime={`${Math.round(blog.body.length / 400)}`}
+                slug={blog.slug}
+              />
+            </li>
+          ))
+        )
+      }
+      {
+        page.data.length > 0 && (
+          <div class="flex justify-center mt-10">
+            <button class="btn btn-primary">Load More</button>
           </div>
-      </li>
+        )
+      }
     </ul>
   </div>
 
