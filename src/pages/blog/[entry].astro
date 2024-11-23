@@ -3,6 +3,7 @@ import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import PageLayout from "../../components/_page_layout.astro";
 import { undefined } from "astro:schema";
+
 export const getStaticPaths: GetStaticPaths = async () => {
   const entries = await getCollection("blog");
   return entries.map((entry) => ({

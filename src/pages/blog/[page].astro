@@ -1,8 +1,15 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import Layout from "../components/_layout.astro";
-import Article from "../components/article.astro";
-import PageLayout from "../components/_page_layout.astro";
+import Layout from "../../components/_layout.astro";
+import Article from "../../components/article.astro";
+import PageLayout from "../../components/_page_layout.astro";
+import type { GetStaticPaths, GetStaticPathsOptions } from "astro";
+import { parseArgsAsCheckConfig } from "@astrojs/check";
+
+export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
+  const entries = await getCollection("blog");
+  return paginate(entries, { pageSize: 3 });
+};
 
 // カレンダー実装用
 // const date = new Date();
@@ -17,10 +24,9 @@ import PageLayout from "../components/_page_layout.astro";
 // };
 
 // const days = generateDaysArray(date.getFullYear(), date.getMonth() + 1);
+const { page } = Astro.props;
 
-const allBlog: CollectionEntry<"blog">[] = (await getCollection("blog")).filter(
-  (blog) => blog.data.draft != true,
-);
+
 ---
 
 <PageLayout title="Blog">
@@ -43,7 +49,7 @@ const allBlog: CollectionEntry<"blog">[] = (await getCollection("blog")).filter(
         </label>
       </li>
       {
-        allBlog.map((blog) => (
+        page.data.map((blog) => (
           <li>
             <Article
               title={blog.data.title}
@@ -58,6 +64,13 @@ const allBlog: CollectionEntry<"blog">[] = (await getCollection("blog")).filter(
           </li>
         ))
       }
+      <li>
+        <div class="flex justify-center join">
+            { page.url.prev ? <a class="join-item btn" href={`${page.currentPage - 1}`}>«</a> : undefined}
+            <p class="join-item btn">{`Page ${page.currentPage}`}</p>
+            { page.url.next ? <a class="join-item btn" href={`${page.currentPage + 1}`}>»</a> : undefined}
+          </div>
+      </li>
     </ul>
   </div>
 
