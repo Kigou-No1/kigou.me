@@ -4,21 +4,21 @@ import PageLayout from "../components/_page_layout.astro";
 import Project from "../components/project.astro";
 
 const projects = (await getCollection("projects")).filter(
-    (project) => project.data.draft != true
+  (project) => project.data.draft != true,
 );
-
 ---
+
 <PageLayout title="Projects">
-    <div class="mt-10">
-        {
-            projects.map(project => (
-                <Project
-                    title={project.data.title}
-                    description={project.data.description}
-                    img={project.data.img}
-                    url={project.data.url}
-                />
-            ))
-        }
-    </div>
+  <div class="mt-10">
+    {
+      projects.map((project) => (
+        <Project
+          title={project.data.title}
+          description={project.data.description}
+          img={project.data.img}
+          url={project.data.url}
+        />
+      ))
+    }
+  </div>
 </PageLayout>
