@@ -16,7 +16,7 @@ const { title, description, img, url } = Astro.props;
   </div>
   <figure>
     <a href={url}>
-      <img src={img} decoding="async" loading="lazy" alt={title}>
+      <img src={`projects/${img}`} decoding="async" loading="lazy" alt={title}>
     </a>
   </figure>
 </div>

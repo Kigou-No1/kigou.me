@@ -17,7 +17,7 @@ export type Props = {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const entries = await getCollection("blog");
-  return entries.map((entry) => ({
+  return entries.map((entry: { slug: any; }) => ({
     params: { entry: entry.slug },
     props: { entry },
   }));

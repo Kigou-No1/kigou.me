@@ -6,7 +6,7 @@ import type { GetStaticPathsOptions } from "astro";
 
 export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
   const entries = (await getCollection("blog")).filter(
-    (entry) => !entry.data.draft,
+    (entry: { data: { draft: any; }; }) => !entry.data.draft,
   );
   return paginate(entries, { pageSize: 3 });
 };
