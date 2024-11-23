@@ -1,6 +1,6 @@
 {
     "title": "Discord Message Expander",
-    "description": "メッセージリンクの元の内容を表示するBotです。",
+    "description": "メッセージリンクの元の内容を表示するBot。Go製。",
     "url": "https://github.com/Sasalive-Production/message-expander",
     "img": "discord-message-expander.png",
     "draft": false
