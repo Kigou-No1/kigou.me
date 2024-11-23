@@ -12,11 +12,6 @@ jobs:
         run: bun install
       - name: build
         run: bun run build
-      
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
       - name: deploy
         uses: cloudflare/wrangler-action@v3
         with:
