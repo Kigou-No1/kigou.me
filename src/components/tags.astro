@@ -1,0 +1,33 @@
+---
+export type Tag = {
+  id: string;
+  collections: string;
+  data: {
+    name: string;
+  };
+};
+
+export type Props = {
+  tags: Tag[] | undefined;
+  uploadAt: string;
+  readTime: string;
+  charCount: number;
+};
+
+const { tags, uploadAt, readTime, charCount: wordCount } = Astro.props;
+---
+
+<ul class="flex flex-wrap gap-2">
+  {
+    tags
+      ? tags.map((tag) => (
+          <li class="badge">
+            <a href={`/blog/tags/${tag.id}`}>{tag.id}</a>
+          </li>
+        ))
+      : undefined
+  }
+  <li class="badge badge-success">{uploadAt}</li>
+  <li class="badge badge-accent">{wordCount} chars</li>
+  <li class="badge badge-info">{readTime}min to read</li>
+</ul>

@@ -78,7 +78,6 @@ const { page } = Astro.props;
                 tags={blog.data.tags}
                 uploadAt={blog.data.uploadAt.toDateString()}
                 charCount={blog.body.length}
-                readTime={`${Math.round(blog.body.length / 400)}`}
                 slug={blog.slug}
               />
             </li>

@@ -1,5 +1,6 @@
 ---
 import { undefined } from "astro:schema";
+import Tags from "./tags.astro";
 
 export type Tag = {
   id: string;
@@ -15,7 +16,6 @@ export type Props = {
   description: string;
   tags: Tag[] | undefined;
   uploadAt: string;
-  readTime: string;
   charCount: number;
   slug: string;
 };
@@ -26,8 +26,7 @@ const {
   description,
   tags,
   uploadAt,
-  readTime,
-  charCount: wordCount,
+  charCount,
   slug,
 } = Astro.props;
 ---
@@ -36,31 +35,10 @@ const {
   <div class="flex items-center">
     <h1 class="place-items-center text-5xl pb-2">{emoji}</h1>
     <div class="flex flex-col pl-3">
-      <a class="font-bold text-2xl pt-3" href={slug}>{title}</a>
+      <a class="font-bold text-2xl pt-3" href={`/blog/${slug}`}>{title}</a>
       <h1 class="text-lg">{description}</h1>
       <div class="flex mt-0.5 w-full max-w-1/2">
-        <ul class="flex flex-wrap gap-2">
-          {
-            tags
-              ? tags.map((tag) => (
-                  <li class="badge">
-                    <a
-                      href={
-                        Astro.url.pathname.startsWith("/blog/tags")
-                          ? tag.id
-                          : `tags/${tag.id}`
-                      }
-                    >
-                      {tag.id}
-                    </a>
-                  </li>
-                ))
-              : undefined
-          }
-          <li class="badge badge-success">{uploadAt}</li>
-          <li class="badge badge-accent">{wordCount} chars</li>
-          <li class="badge badge-info">{readTime}min to read</li>
-        </ul>
+        <Tags tags={tags} uploadAt={uploadAt} readTime={Math.round(charCount / 400).toString()} charCount={charCount}/>
       </div>
     </div>
   </div>
