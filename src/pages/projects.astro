@@ -9,7 +9,7 @@ const projects = (await getCollection("projects")).filter(
 ---
 
 <PageLayout title="Projects">
-  <div class="mt-10">
+  <div>
     {
       projects.map((project) => (
         <Project
