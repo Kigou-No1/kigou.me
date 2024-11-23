@@ -1,6 +1,4 @@
 ---
-import { Image } from 'astro:assets';
-
 export type Props = {
   title: string;
   description: string;
@@ -9,9 +7,6 @@ export type Props = {
 };
 
 const { title, description, img, url } = Astro.props;
-
-const imgSrc = await import(`../assets/projects/${img}`);
-
 ---
 
 <div class="card lg:card-side bg-base-100 shadow-xl">
@@ -21,7 +16,7 @@ const imgSrc = await import(`../assets/projects/${img}`);
   </div>
   <figure>
     <a href={url}>
-      <Image src={imgSrc.default} alt={title} class="rounded-lg" width="500" height="1000" quality={"max"}/>
+      <img src={`projects/${img}`}/ decoding="async" loading="lazy" alt="Discord Message Expander">
     </a>
   </figure>
 </div>

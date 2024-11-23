@@ -2,6 +2,6 @@
     "title": "Discord Message Expander",
     "description": "A simple Discord bot that expands messages that are too long.",
     "url": "https://github.com/Sasalive-Production/message-expander",
-    "img": "/discord-message-expander.png",
+    "img": "discord-message-expander.png",
     "draft": false
 }
