@@ -11,7 +11,7 @@ jobs:
       - name: install dependencies
         run: bun install
       - name: build
-        run: bun build
+        run: bun run build
       
   deploy:
     runs-on: ubuntu-latest
