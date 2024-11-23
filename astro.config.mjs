@@ -7,4 +7,8 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
   integrations: [tailwind()],
   site: "https://kigou.me",
+  trailingSlash: "never",
+  build: {
+    format: "file",
+  },
 });
