@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import Article, { type Tag } from "../../../components/article.astro";
+import Article from "../../../components/article.astro";
 import PageLayout from "../../../components/_page_layout.astro";
 
 export const getStaticPaths = async () => {
@@ -23,7 +23,7 @@ console.log(pages)
         pages.length === 0 ? (
           <p>まだ記事が投稿されていません！</p>
         ) : (
-          pages.map((blog: { data: { title: string; emoji: string; tags: Tag[] | undefined; uploadAt: { toDateString: () => string; }; }; body: string; slug: string; }) => (
+          pages.map((blog) => (
             <li>
               <Article
                 title={blog.data.title}

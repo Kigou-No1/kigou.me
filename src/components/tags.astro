@@ -1,14 +1,6 @@
 ---
-export type Tag = {
-  id: string;
-  collections: string;
-  data: {
-    name: string;
-  };
-};
-
 export type Props = {
-  tags: Tag[] | undefined;
+  tags: any;
   uploadAt: string;
   readTime: string;
   charCount: number;
@@ -20,7 +12,7 @@ const { tags, uploadAt, readTime, charCount: wordCount } = Astro.props;
 <ul class="flex flex-wrap gap-2">
   {
     tags
-      ? tags.map((tag) => (
+      ? tags.map((tag: { id: unknown; }) => (
           <li class="badge">
             <a href={`/blog/tags/${tag.id}`}>{tag.id}</a>
           </li>

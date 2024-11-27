@@ -3,20 +3,21 @@ import { getCollection } from "astro:content";
 import Article from "../../components/article.astro";
 import PageLayout from "../../components/_page_layout.astro";
 import type { GetStaticPathsOptions } from "astro";
+import "@pagefind/default-ui/css/ui.css";
 
 export type blogEntry = {
-  id: string,
-  slug: string,
-  body: string,
-  collection: string,
+  id: string;
+  slug: string;
+  body: string;
+  collection: string;
   data: {
-    emoji: string,
-    title: string,
-    draft: boolean,
-    uploadAt: Date,
-    tags: any,
-  }
-}
+    emoji: string;
+    title: string;
+    draft: boolean;
+    uploadAt: Date;
+    tags: any;
+  };
+};
 
 export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
   const entries = (await getCollection("blog")).filter(
@@ -44,27 +45,13 @@ const { page } = Astro.props;
 <PageLayout title="Blog">
   <div>
     <ul class="mt-10 w-5/6 max-w-4xl space-y-4">
-      {
-        page.data.length > 0 && (
-          <li class="pb-4">
-            <label class="input input-bordered flex items-center gap-2 mb-5">
-              <input type="text" class="grow" placeholder="Search" />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                class="h-4 w-4 opacity-70"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </label>
-          </li>
-        )
-      }
+      {page.data.length > 0 && <div class="search" />}
+      <script>
+        import { PagefindUI } from "@pagefind/default-ui";
+        new PagefindUI({
+          element: ".search",
+        });
+      </script>
       {
         page.data.length === 0 ? (
           <p>まだ記事が投稿されていません！</p>
@@ -87,9 +74,19 @@ const { page } = Astro.props;
       {
         page.total != 1 && (
           <div class="join flex justify-center pt-10">
-            { page.url.prev && <a class="join-item btn" href={page.url.prev}>«</a>}
-            { (page.url.prev || page.url.next) && <a class="join-item btn">Page {page.currentPage}</a>}
-            { page.url.next && <a class="join-item btn" href={page.url.next}>»</a>}
+            {page.url.prev && (
+              <a class="join-item btn" href={page.url.prev}>
+                «
+              </a>
+            )}
+            {(page.url.prev || page.url.next) && (
+              <a class="join-item btn">Page {page.currentPage}</a>
+            )}
+            {page.url.next && (
+              <a class="join-item btn" href={page.url.next}>
+                »
+              </a>
+            )}
           </div>
         )
       }

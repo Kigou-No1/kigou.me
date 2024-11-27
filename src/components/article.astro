@@ -1,20 +1,11 @@
 ---
-import { undefined } from "astro:schema";
 import Tags from "./tags.astro";
-
-export type Tag = {
-  id: string;
-  collections: string;
-  data: {
-    name: string;
-  };
-};
 
 export type Props = {
   emoji: string;
   title: string;
   description: string;
-  tags: Tag[] | undefined;
+  tags: any;
   uploadAt: string;
   charCount: number;
   slug: string;
