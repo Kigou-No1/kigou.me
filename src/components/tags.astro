@@ -2,11 +2,10 @@
 export type Props = {
   tags: any;
   uploadAt: string;
-  readTime: string;
   charCount: number;
 };
 
-const { tags, uploadAt, readTime, charCount: wordCount } = Astro.props;
+const { tags, uploadAt, charCount: wordCount } = Astro.props;
 ---
 
 <ul class="flex flex-wrap gap-2">
@@ -21,5 +20,5 @@ const { tags, uploadAt, readTime, charCount: wordCount } = Astro.props;
   }
   <li class="badge badge-success">{uploadAt}</li>
   <li class="badge badge-accent">{wordCount} chars</li>
-  <li class="badge badge-info">{readTime}min to read</li>
+  <li class="badge badge-info">{Math.round(wordCount / 400).toString()}min to read</li>
 </ul>

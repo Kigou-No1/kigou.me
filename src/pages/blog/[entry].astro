@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import PageLayout from "../../components/_page_layout.astro";
+import Tags from "src/components/tags.astro";
 
 export type Props = {
     entry: {
@@ -29,30 +30,7 @@ const { Content, headings } = await props.entry.render();
 
 <PageLayout title={props.entry.data.title}>
   <div class="mt-3 mb-4">
-    <ul class="flex items-center flex-wrap">
-      {
-        props.entry.data.tags?.map((tag: unknown) => (
-          <li>
-            <a class="badge ml-1">{tag}</a>
-          </li>
-        ))
-      }
-      <li>
-        <a class="badge badge-success ml-1">
-          {props.entry.data.uploadAt.toDateString()}
-        </a>
-      </li>
-      <li>
-        <a class="badge badge-accent ml-1">
-          {props.entry.body.split(" ").length} words
-        </a>
-      </li>
-      <li>
-        <a class="badge badge-info ml-1">
-          {Math.round(props.entry.body.split(" ").length / 400)}min to read
-        </a>
-      </li>
-    </ul>
+    <Tags tags={props.entry.data.tags} uploadAt={props.entry.data.uploadAt.toDateString()} charCount={props.entry.body.length} />
   </div>
   <div class="flex max-w-screen ">
     <div class="text-center w-full max-w-4xl mt-4">
