@@ -50,6 +50,9 @@ const { page } = Astro.props;
         import { PagefindUI } from "@pagefind/default-ui";
         new PagefindUI({
           element: ".search",
+          translations: {
+            placeholder: "Search",
+          }
         });
       </script>
       {
