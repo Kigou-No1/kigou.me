@@ -12,6 +12,8 @@ jobs:
         run: bun install
       - name: build
         run: bun run build
+      - name: pagefind
+        run: bunx pagefind -s dist
       - name: deploy
         uses: cloudflare/wrangler-action@v3
         with:
