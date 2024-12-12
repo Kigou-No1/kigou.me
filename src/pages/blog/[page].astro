@@ -59,7 +59,7 @@ const { page } = Astro.props;
         page.data.length === 0 ? (
           <p>まだ記事が投稿されていません！</p>
         ) : (
-          page.data.map((blog) => (
+          page.data.sort((a, b) => b.data.uploadAt.getTime() - a.data.uploadAt.getTime()).map((blog) => (
             <li>
               <Article
                 title={blog.data.title}
